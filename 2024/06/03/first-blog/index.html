@@ -4,18 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>first_blog | Hexo</title>
+  <title>FreeRTOS | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="test">
+  <meta name="description" content="内存管理内存管理文件说明   文件 优点 缺点    heap_1.c 分配简单，时间确定 只分配、不回收   heap_2.c 动态分配、最佳匹配 碎片、时间不定   heap_3.c 调用标准库函数 速度慢、时间不定   heap_4.c 相邻空闲内存可合并 可解决碎片问题、时间不定   heap_5.c 在heap_4基础上支持分隔的内存块 可解决碎片问题、时间不定   任务管理创建任务12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="first_blog">
+<meta property="og:title" content="FreeRTOS">
 <meta property="og:url" content="http://example.com/2024/06/03/first-blog/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="test">
+<meta property="og:description" content="内存管理内存管理文件说明   文件 优点 缺点    heap_1.c 分配简单，时间确定 只分配、不回收   heap_2.c 动态分配、最佳匹配 碎片、时间不定   heap_3.c 调用标准库函数 速度慢、时间不定   heap_4.c 相邻空闲内存可合并 可解决碎片问题、时间不定   heap_5.c 在heap_4基础上支持分隔的内存块 可解决碎片问题、时间不定   任务管理创建任务12">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-06-03T10:58:30.000Z">
-<meta property="article:modified_time" content="2024-06-03T11:20:33.183Z">
+<meta property="article:modified_time" content="2024-06-03T11:55:31.595Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="FreeRTOS">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -85,7 +86,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      first_blog
+      FreeRTOS
     </h1>
   
 
@@ -93,15 +94,137 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>test</p>
+        <h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><h2 id="内存管理文件说明"><a href="#内存管理文件说明" class="headerlink" title="内存管理文件说明"></a>内存管理文件说明</h2><table>
+<thead>
+<tr>
+<th>文件</th>
+<th align="left">优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>heap_1.c</td>
+<td align="left">分配简单，时间确定</td>
+<td>只分配、不回收</td>
+</tr>
+<tr>
+<td>heap_2.c</td>
+<td align="left">动态分配、最佳匹配</td>
+<td>碎片、时间不定</td>
+</tr>
+<tr>
+<td>heap_3.c</td>
+<td align="left">调用标准库函数</td>
+<td>速度慢、时间不定</td>
+</tr>
+<tr>
+<td>heap_4.c</td>
+<td align="left">相邻空闲内存可合并</td>
+<td>可解决碎片问题、时间不定</td>
+</tr>
+<tr>
+<td>heap_5.c</td>
+<td align="left">在heap_4基础上支持分隔的内存块</td>
+<td>可解决碎片问题、时间不定</td>
+</tr>
+</tbody></table>
+<h1 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h1><h2 id="创建任务"><a href="#创建任务" class="headerlink" title="创建任务"></a>创建任务</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BaseType_t <span class="title function_">xTaskCreate</span><span class="params">( TaskFunction_t pxTaskCode, <span class="comment">// 函数指针, 任务函数</span></span></span><br><span class="line"><span class="params">						<span class="type">const</span> <span class="type">char</span> * <span class="type">const</span> pcName, <span class="comment">// 任务的名字</span></span></span><br><span class="line"><span class="params">						<span class="type">const</span> configSTACK_DEPTH_TYPE usStackDepth, <span class="comment">// 栈大小,单位为word,10表示40字节</span></span></span><br><span class="line"><span class="params">						<span class="type">void</span> * <span class="type">const</span> pvParameters, <span class="comment">// 调用任务函数时传入的参数</span></span></span><br><span class="line"><span class="params">						UBaseType_t uxPriority, <span class="comment">// 优先级</span></span></span><br><span class="line"><span class="params">						TaskHandle_t * <span class="type">const</span> pxCreatedTask )</span>; <span class="comment">// 任务句柄, 以后使用它来操作这个任务</span></span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pxTaskCode</td>
+<td>传入一个c函数，退出时要调用”vTaskDelete(NULL)”</td>
+</tr>
+<tr>
+<td>pcName</td>
+<td>任务名字，长度为：configMAX_TASK_NAME_LEN</td>
+</tr>
+<tr>
+<td>usStackDepth</td>
+<td>每个任务都有自己的栈大小，单位是字(word)</td>
+</tr>
+<tr>
+<td>pvParameters</td>
+<td>调用pvTaskCode函数指针时用到：pvTaskCode(pvParameters)</td>
+</tr>
+<tr>
+<td>uxPriority</td>
+<td>优先级范围0~(configMAX_PRIORITIES – 1)，数值越小优先级越低</td>
+</tr>
+<tr>
+<td>pxCreatedTask</td>
+<td>任务句柄，该优先级可以用到，若不用可以传入NULL</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>成功：pdPASS</td>
+</tr>
+</tbody></table>
+<h2 id="删除任务"><a href="#删除任务" class="headerlink" title="删除任务"></a>删除任务</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">vTaskDelete</span><span class="params">( TaskHandle_t xTaskToDelete )</span>;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xTaskToDelete</td>
+<td>创建任务时会得到一个句柄，若想删除自己则填NULL</td>
+</tr>
+</tbody></table>
+<h1 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h1><h2 id="创建队列"><a href="#创建队列" class="headerlink" title="创建队列"></a>创建队列</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QueueHandle_t <span class="title function_">xQueueCreate</span><span class="params">( UBaseType_t uxQueueLength, UBaseType_t uxItemSize )</span>;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>uxQueueLength</td>
+<td>队列长度</td>
+</tr>
+<tr>
+<td>uxItemSize</td>
+<td>每个数据大小</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>非0：成功，返回队列句柄。NULL：失败</td>
+</tr>
+</tbody></table>
+<h2 id="队列复位"><a href="#队列复位" class="headerlink" title="队列复位"></a>队列复位</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* pxQueue : 复位哪个队列;</span></span><br><span class="line"><span class="comment">* 返回值: pdPASS(必定成功)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">BaseType_t <span class="title function_">xQueueReset</span><span class="params">( QueueHandle_t pxQueue)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="删除队列"><a href="#删除队列" class="headerlink" title="删除队列"></a>删除队列</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void vQueueDelete( QueueHandle_t xQueue );</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="写队列"><a href="#写队列" class="headerlink" title="写队列"></a>写队列</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/* 等同于xQueueSendToBack</span><br><span class="line">* 往队列尾部写入数据，如果没有空间，阻塞时间为xTicksToWait</span><br><span class="line">*/</span><br><span class="line">BaseType_t xQueueSend(	QueueHandle_t xQueue,</span><br><span class="line">						const void *pvItemToQueue,</span><br><span class="line">						TickType_t xTicksToWait</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">* 往队列尾部写入数据，如果没有空间，阻塞时间为xTicksToWait</span><br><span class="line">*/</span><br><span class="line">BaseType_t xQueueSendToBack(	QueueHandle_t xQueue,</span><br><span class="line">								const void *pvItemToQueue,</span><br><span class="line">								TickType_t xTicksToWait</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">* 往队列尾部写入数据，此函数可以在中断函数中使用，不可阻塞</span><br><span class="line">*/</span><br><span class="line">BaseType_t xQueueSendToBackFromISR(	QueueHandle_t xQueue,</span><br><span class="line">									const void *pvItemToQueue,</span><br><span class="line">									BaseType_t *pxHigherPriorityTaskWoken</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">* 往队列头部写入数据，如果没有空间，阻塞时间为xTicksToWait</span><br><span class="line">*/</span><br><span class="line">BaseType_t xQueueSendToFront(	QueueHandle_t xQueue,</span><br><span class="line">								const void *pvItemToQueue,</span><br><span class="line">								TickType_t xTicksToWait</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">* 往队列头部写入数据，此函数可以在中断函数中使用，不可阻塞</span><br><span class="line">*/</span><br><span class="line">BaseType_t xQueueSendToFrontFromISR(	QueueHandle_t xQueue,</span><br><span class="line">										const void *pvItemToQueue,</span><br><span class="line">										BaseType_t *pxHigherPriorityTaskWoken</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/06/03/first-blog/" data-id="clwyv8cz80000istuegfv93tl" data-title="first_blog" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/06/03/first-blog/" data-id="clwyv8cz80000istuegfv93tl" data-title="FreeRTOS" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FreeRTOS/" rel="tag">FreeRTOS</a></li></ul>
+
     </footer>
   </div>
   
@@ -118,9 +241,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/FreeRTOS/" rel="tag">FreeRTOS</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/FreeRTOS/" style="font-size: 10px;">FreeRTOS</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -139,7 +276,7 @@
       <ul>
         
           <li>
-            <a href="/2024/06/03/first-blog/">first_blog</a>
+            <a href="/2024/06/03/first-blog/">FreeRTOS</a>
           </li>
         
       </ul>
