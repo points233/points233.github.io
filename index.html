@@ -69,9 +69,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-first-blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-STM32_FreeRTOS_Function_Describe" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/06/03/first-blog/" class="article-date">
+    <a href="/2024/06/03/STM32_FreeRTOS_Function_Describe/" class="article-date">
   <time class="dt-published" datetime="2024-06-03T10:58:30.000Z" itemprop="datePublished">2024-06-03</time>
 </a>
     
@@ -83,7 +83,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/06/03/first-blog/">FreeRTOS函数说明</a>
+      <a class="p-name article-title" href="/2024/06/03/STM32_FreeRTOS_Function_Describe/">FreeRTOS函数说明</a>
     </h1>
   
 
@@ -295,11 +295,57 @@
 </tbody></table>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* xSemaphore: 信号量句柄</span></span><br><span class="line"><span class="comment">* 返回值：pdTRUE表示成功</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">BaseType_t <span class="title function_">xSemaphoreGive</span><span class="params">( SemaphoreHandle_t xSemaphore )</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* xSemaphore: 信号量句柄</span></span><br><span class="line"><span class="comment">* pxHigherPriorityTaskWoken：如果释放信号量导致更高优先级的任务变为了就绪态，则*pxHigherPriorityTaskWoken=pdTRUE</span></span><br><span class="line"><span class="comment">* 返回值：pdTRUE表示成功</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">BaseType_t <span class="title function_">xSemaphoreGiveFromISR</span><span class="params">(</span></span><br><span class="line"><span class="params">		SemaphoreHandle_t xSemaphore,</span></span><br><span class="line"><span class="params">		BaseType_t *pxHigherPriorityTaskWoken</span></span><br><span class="line"><span class="params">)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* xSemaphore: 信号量句柄</span></span><br><span class="line"><span class="comment">* xTicksToWait：如果无法立马获取信号量就可以阻塞一下</span></span><br><span class="line"><span class="comment">* 				0表示不阻塞</span></span><br><span class="line"><span class="comment">*				portMAX_DELAY表示一直阻塞到成功</span></span><br><span class="line"><span class="comment">*				其他值可以用pdMS_TO_TICKS()来指定阻塞若干ms</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">BaseType_t <span class="title function_">xSemaphoreTake</span><span class="params">(</span></span><br><span class="line"><span class="params">		SemaphoreHandle_t xSemaphore,</span></span><br><span class="line"><span class="params">		TickType_t xTicksToWait</span></span><br><span class="line"><span class="params">)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* xSemaphore: 信号量句柄</span></span><br><span class="line"><span class="comment">* pxHigherPriorityTaskWoken：如果获取信号量导致更高优先级的任务变为了就绪态，则*pxHigherPriorityTaskWoken=pdTRUE</span></span><br><span class="line"><span class="comment">* 返回值：pdTRUE表示成功</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">BaseType_t <span class="title function_">xSemaphoreTakeFromISR</span><span class="params">(</span></span><br><span class="line"><span class="params">		SemaphoreHandle_t xSemaphore,</span></span><br><span class="line"><span class="params">		BaseType_t *pxHigherPriorityTaskWoken</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
 
+<h1 id="事件组"><a href="#事件组" class="headerlink" title="事件组"></a>事件组</h1><h2 id="创建事件组"><a href="#创建事件组" class="headerlink" title="创建事件组"></a>创建事件组</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 创建一个事件组，返回它的句柄。</span></span><br><span class="line"><span class="comment">* 此函数内部会分配事件组结构体</span></span><br><span class="line"><span class="comment">* 返回值: 返回句柄，非NULL表示成功</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">EventGroupHandle_t <span class="title function_">xEventGroupCreate</span><span class="params">( <span class="type">void</span> )</span>;</span><br><span class="line"><span class="comment">/* 创建一个事件组，返回它的句柄。</span></span><br><span class="line"><span class="comment">* 此函数无需动态分配内存，所以需要先有一个StaticEventGroup_t结构体，并传入它的指针</span></span><br><span class="line"><span class="comment">* 返回值: 返回句柄，非NULL表示成功</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">EventGroupHandle_t <span class="title function_">xEventGroupCreateStatic</span><span class="params">(StaticEventGroup_t *pxEventGroupBuffer )</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="删除事件组"><a href="#删除事件组" class="headerlink" title="删除事件组"></a>删除事件组</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* xEventGroup: 事件组句柄，你要删除哪个事件组</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">vEventGroupDelete</span><span class="params">( EventGroupHandle_t xEventGroup )</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="设置事件"><a href="#设置事件" class="headerlink" title="设置事件"></a>设置事件</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 设置事件组中的位</span></span><br><span class="line"><span class="comment">* xEventGroup: 哪个事件组</span></span><br><span class="line"><span class="comment">* uxBitsToSet: 设置哪些位?</span></span><br><span class="line"><span class="comment">* 如果uxBitsToSet的bitX, bitY为1, 那么事件组中的bitX, bitY被设置为1</span></span><br><span class="line"><span class="comment">* 可以用来设置多个位，比如 0x15 就表示设置bit4, bit2, bit0</span></span><br><span class="line"><span class="comment">* 返回值: 返回原来的事件值(没什么意义, 因为很可能已经被其他任务修改了)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">EventBits_t <span class="title function_">xEventGroupSetBits</span><span class="params">(</span></span><br><span class="line"><span class="params">		EventGroupHandle_t xEventGroup,</span></span><br><span class="line"><span class="params">		<span class="type">const</span> EventBits_t uxBitsToSet </span></span><br><span class="line"><span class="params">)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设置事件组中的位</span></span><br><span class="line"><span class="comment">* xEventGroup: 哪个事件组</span></span><br><span class="line"><span class="comment">* uxBitsToSet: 设置哪些位?</span></span><br><span class="line"><span class="comment">* 如果uxBitsToSet的bitX, bitY为1, 那么事件组中的bitX, bitY被设置为1</span></span><br><span class="line"><span class="comment">* 可以用来设置多个位，比如 0x15 就表示设置bit4, bit2, bit0</span></span><br><span class="line"><span class="comment">* pxHigherPriorityTaskWoken: 有没有导致更高优先级的任务进入就绪态? pdTRUE-有,</span></span><br><span class="line"><span class="comment">pdFALSE-没有</span></span><br><span class="line"><span class="comment">* 返回值: pdPASS-成功, pdFALSE-失败</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">BaseType_t <span class="title function_">xEventGroupSetBitsFromISR</span><span class="params">(</span></span><br><span class="line"><span class="params">		EventGroupHandle_t xEventGroup,</span></span><br><span class="line"><span class="params">		<span class="type">const</span> EventBits_t uxBitsToSet,</span></span><br><span class="line"><span class="params">		BaseType_t * pxHigherPriorityTaskWoken</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>xEventGroupSetBitsFromISR</code> 不是直接去设置事件组，而是给一个FreeRTOS后台任务发送队列数据，由这个任务来设置事件组</p>
+<h2 id="等待事件"><a href="#等待事件" class="headerlink" title="等待事件"></a>等待事件</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">EventBits_t <span class="title function_">xEventGroupWaitBits</span><span class="params">(</span></span><br><span class="line"><span class="params">		EventGroupHandle_t xEventGroup,</span></span><br><span class="line"><span class="params">		<span class="type">const</span> EventBits_t uxBitsToWaitFor,</span></span><br><span class="line"><span class="params">		<span class="type">const</span> BaseType_t xClearOnExit,</span></span><br><span class="line"><span class="params">		<span class="type">const</span> BaseType_t xWaitForAllBits,</span></span><br><span class="line"><span class="params">		TickType_t xTicksToWait</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xEventGroup</td>
+<td>等待哪个事件组</td>
+</tr>
+<tr>
+<td>uxBitsToWaitFor</td>
+<td>等待哪些位</td>
+</tr>
+<tr>
+<td>xClearOnExit</td>
+<td>是否清除事件位</td>
+</tr>
+<tr>
+<td>xWaitForAllBits</td>
+<td>怎么测试？是”AND”还是”OR”？pdTRUE: 等待的位，全部为1;pdFALSE: 等待的位，某一个为1即可</td>
+</tr>
+<tr>
+<td>xTicksToWait</td>
+<td>如果事件未发生等待多久，0为立刻返回，portMAX_DELAY一直等待，可用pdMS_TO_TICKS()吧ms转换为Tick_Count</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>返回事件值</td>
+</tr>
+</tbody></table>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/06/03/first-blog/" data-id="clwyv8cz80000istuegfv93tl" data-title="FreeRTOS函数说明" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/06/03/STM32_FreeRTOS_Function_Describe/" data-id="clx0a61o20000tktuhti74vyn" data-title="FreeRTOS函数说明" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -358,7 +404,7 @@
       <ul>
         
           <li>
-            <a href="/2024/06/03/first-blog/">FreeRTOS函数说明</a>
+            <a href="/2024/06/03/STM32_FreeRTOS_Function_Describe/">FreeRTOS函数说明</a>
           </li>
         
       </ul>
