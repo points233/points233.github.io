@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux_uart | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="TTYTTY来源一个名为teletype的公司，他生产的teleprinter，他是一种通信设备，可以用来发送、接收文本信息。然后他就与计算机连接上了，再后来比如出现串口，usb之类的设备出现淘汰了teletype，但是他的这个TTY一直保留下来，作为串口、终端之类的驱动程序。 访问TTY你可以在Ubuntu中通过Ctrl+Alt+F3调出tty3的登录提示，你可以看到你以连接到&#x2F;dev">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux_uart">
+<meta property="og:url" content="http://example.com/2024/06/09/Linux-uart/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="TTYTTY来源一个名为teletype的公司，他生产的teleprinter，他是一种通信设备，可以用来发送、接收文本信息。然后他就与计算机连接上了，再后来比如出现串口，usb之类的设备出现淘汰了teletype，但是他的这个TTY一直保留下来，作为串口、终端之类的驱动程序。 访问TTY你可以在Ubuntu中通过Ctrl+Alt+F3调出tty3的登录提示，你可以看到你以连接到&#x2F;dev">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/Linux-uart.assets/image-20240609192219321.png">
+<meta property="og:image" content="http://example.com/Linux-uart.assets/image-20240609194004539.png">
+<meta property="article:published_time" content="2024-06-09T10:57:30.000Z">
+<meta property="article:modified_time" content="2024-06-09T14:14:00.386Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Linux uart TTY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Linux-uart.assets/image-20240609192219321.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux-uart" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/06/09/Linux-uart/" class="article-date">
+  <time class="dt-published" datetime="2024-06-09T10:57:30.000Z" itemprop="datePublished">2024-06-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux_uart
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="TTY"><a href="#TTY" class="headerlink" title="TTY"></a>TTY</h1><h2 id="TTY来源"><a href="#TTY来源" class="headerlink" title="TTY来源"></a>TTY来源</h2><p>一个名为teletype的公司，他生产的teleprinter，他是一种通信设备，可以用来发送、接收文本信息。然后他就与计算机连接上了，再后来比如出现串口，usb之类的设备出现淘汰了teletype，但是他的这个TTY一直保留下来，作为串口、终端之类的驱动程序。</p>
+<h2 id="访问TTY"><a href="#访问TTY" class="headerlink" title="访问TTY"></a>访问TTY</h2><p>你可以在Ubuntu中通过Ctrl+Alt+F3调出tty3的登录提示，你可以看到你以连接到&#x2F;dev&#x2F;tty3。</p>
+<p>你再使用Ctrl+Alt+F2返回图形化桌面。类似如下</p>
+<p>Ctrl+Alt+F1：返回到图形桌面环境登录屏幕。<br>Ctrl+Alt+F2：返回图形桌面环境。<br>Ctrl+Alt+F3：打开 TTY 3。<br>Ctrl+Alt+F4：打开 TTY 4。<br>Ctrl+Alt+F5：打开 TTY 5。<br>Ctrl+Alt+F6：打开 TTY 6。</p>
+<h2 id="Terminal与console"><a href="#Terminal与console" class="headerlink" title="Terminal与console"></a>Terminal与console</h2><p>terminal中文意思为终端，console翻译为控制台，可以理解为console的权限更大、能查看更多信息</p>
+<h2 id="TTY驱动程序框架"><a href="#TTY驱动程序框架" class="headerlink" title="TTY驱动程序框架"></a>TTY驱动程序框架</h2><p><img src="/Linux-uart.assets/image-20240609192219321.png" alt="image-20240609192219321"></p>
+<p>比如，我们从电脑上输入一个字符’l’，然后pc会从串口发送一个字符’l’到arm开发板的串口，然后arm开发板经过uart驱动层传输到行规程。行规程发现这个普通字符’l’他就发回到串口驱动，然后发回pc实现回显。同理我们在发送一个字符’s’。</p>
+<p>我们再从pc上输入一个字符’a’，同理会从串口发送一个字符’a’到arm开发板直到回显。这时比如你这个字符’a’是你不想输入的，你就按下backspace键。pc就发送backspace所对应的数值发给arm开发板，行规程就发现这个数值是个退格键，行规程里有个buf，他就把buf里那个’a’删除并且返回给串口驱动层，直到返回给pc。实现退格操作。</p>
+<p>现在已经有了“ls”这个字符串了，你按下回车行规程收到回车他就把buf发送给上层app，比如shell。shell就会把执行的结果发回行规程，行规程就发给串口驱动程序，直到发回pc实现调用命令。</p>
+<h1 id="Linux串口编程"><a href="#Linux串口编程" class="headerlink" title="Linux串口编程"></a>Linux串口编程</h1><p>对于Linux中UART编程套路一般为</p>
+<ul>
+<li>open</li>
+<li>设置行规程，比如波特率、数据位、停止位、校验位、RAW模式(原始模式)</li>
+<li>read&#x2F;write</li>
+</ul>
+<p>设置行规程一般用Linux中抽象出来的结构体termios</p>
+<p><img src="/Linux-uart.assets/image-20240609194004539.png" alt="image-20240609194004539"></p>
+<p>结构体介绍可以参考</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yemingzhu163/article/details/5897156"> Linux串口—struct termios结构体 </a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/feisky/archive/2010/05/21/1740893.html"> Linux串口编程 </a></p>
+<p>串口回显代码参考</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/points233/study-code"> 我的git仓库 </a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Linux_app/uart/uart.c</span><br></pre></td></tr></table></figure>
+
+<p>用串口驱动GPS代码参考</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/06/09/Linux-uart/" data-id="clx7mkpln00005otu3y0kez9d" data-title="Linux_uart" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux-uart-TTY/" rel="tag">Linux uart TTY</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/06/03/STM32_FreeRTOS_Function_Describe/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">FreeRTOS函数说明</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/FreeRTOS/" rel="tag">FreeRTOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-uart-TTY/" rel="tag">Linux uart TTY</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/FreeRTOS/" style="font-size: 10px;">FreeRTOS</a> <a href="/tags/Linux-uart-TTY/" style="font-size: 10px;">Linux uart TTY</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/06/09/Linux-uart/">Linux_uart</a>
+          </li>
+        
+          <li>
+            <a href="/2024/06/03/STM32_FreeRTOS_Function_Describe/">FreeRTOS函数说明</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
