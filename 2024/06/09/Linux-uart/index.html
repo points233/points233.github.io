@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="TTYTTY来源一个名为teletype的公司，他生产的teleprinter，他是一种通信设备，可以用来发送、接收文本信息。然后他就与计算机连接上了，再后来比如出现串口，usb之类的设备出现淘汰了teletype，但是他的这个TTY一直保留下来，作为串口、终端之类的驱动程序。 访问TTY你可以在Ubuntu中通过Ctrl+Alt+F3调出tty3的登录提示，你可以看到你以连接到&#x2F;dev">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/Linux-uart.assets/image-20240609192219321.png">
-<meta property="og:image" content="http://example.com/Linux-uart.assets/image-20240609194004539.png">
+<meta property="og:image" content="http://example.com/2024/06/09/Linux-uart/image-20240609192219321.png">
+<meta property="og:image" content="http://example.com/2024/06/09/Linux-uart/image-20240609194004539.png">
 <meta property="article:published_time" content="2024-06-09T10:57:30.000Z">
-<meta property="article:modified_time" content="2024-06-09T14:14:00.386Z">
+<meta property="article:modified_time" content="2024-06-09T14:30:53.956Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Linux uart TTY">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Linux-uart.assets/image-20240609192219321.png">
+<meta name="twitter:image" content="http://example.com/2024/06/09/Linux-uart/image-20240609192219321.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -102,7 +102,10 @@
 <p>你再使用Ctrl+Alt+F2返回图形化桌面。类似如下</p>
 <p>Ctrl+Alt+F1：返回到图形桌面环境登录屏幕。<br>Ctrl+Alt+F2：返回图形桌面环境。<br>Ctrl+Alt+F3：打开 TTY 3。<br>Ctrl+Alt+F4：打开 TTY 4。<br>Ctrl+Alt+F5：打开 TTY 5。<br>Ctrl+Alt+F6：打开 TTY 6。</p>
 <h2 id="Terminal与console"><a href="#Terminal与console" class="headerlink" title="Terminal与console"></a>Terminal与console</h2><p>terminal中文意思为终端，console翻译为控制台，可以理解为console的权限更大、能查看更多信息</p>
-<h2 id="TTY驱动程序框架"><a href="#TTY驱动程序框架" class="headerlink" title="TTY驱动程序框架"></a>TTY驱动程序框架</h2><p><img src="/Linux-uart.assets/image-20240609192219321.png" alt="image-20240609192219321"></p>
+<h2 id="TTY驱动程序框架"><a href="#TTY驱动程序框架" class="headerlink" title="TTY驱动程序框架"></a>TTY驱动程序框架</h2><img src="/2024/06/09/Linux-uart/image-20240609192219321.png" class="" title="图片">
+
+
+
 <p>比如，我们从电脑上输入一个字符’l’，然后pc会从串口发送一个字符’l’到arm开发板的串口，然后arm开发板经过uart驱动层传输到行规程。行规程发现这个普通字符’l’他就发回到串口驱动，然后发回pc实现回显。同理我们在发送一个字符’s’。</p>
 <p>我们再从pc上输入一个字符’a’，同理会从串口发送一个字符’a’到arm开发板直到回显。这时比如你这个字符’a’是你不想输入的，你就按下backspace键。pc就发送backspace所对应的数值发给arm开发板，行规程就发现这个数值是个退格键，行规程里有个buf，他就把buf里那个’a’删除并且返回给串口驱动层，直到返回给pc。实现退格操作。</p>
 <p>现在已经有了“ls”这个字符串了，你按下回车行规程收到回车他就把buf发送给上层app，比如shell。shell就会把执行的结果发回行规程，行规程就发给串口驱动程序，直到发回pc实现调用命令。</p>
@@ -113,7 +116,8 @@
 <li>read&#x2F;write</li>
 </ul>
 <p>设置行规程一般用Linux中抽象出来的结构体termios</p>
-<p><img src="/Linux-uart.assets/image-20240609194004539.png" alt="image-20240609194004539"></p>
+<img src="/2024/06/09/Linux-uart/image-20240609194004539.png" class="" title="图片">
+
 <p>结构体介绍可以参考</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yemingzhu163/article/details/5897156"> Linux串口—struct termios结构体 </a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/feisky/archive/2010/05/21/1740893.html"> Linux串口编程 </a></p>
